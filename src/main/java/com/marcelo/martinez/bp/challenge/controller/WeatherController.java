@@ -1,0 +1,97 @@
+package com.marcelo.martinez.bp.challenge.controller;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.marcelo.martinez.bp.challenge.busisness.service.AccuWeatherService;
+import com.marcelo.martinez.bp.challenge.dto.location.GenericDto;
+import com.marcelo.martinez.bp.challenge.dto.location.LocationDto;
+import com.marcelo.martinez.bp.challenge.dto.weather.WeatherForecastDto;
+
+import lombok.extern.slf4j.Slf4j;
+
+@RestController
+@RequestMapping("/v1")
+@Slf4j
+public class WeatherController {
+
+   @Autowired
+   private AccuWeatherService accuWeatherService;
+
+   @GetMapping(value = "/location/regions")
+   @ResponseBody
+   @Operation(summary = "Get", description = "Get regions available", security = @SecurityRequirement(name = "Token"))
+   @ApiResponses(value = {
+         @ApiResponse(responseCode = "200", description = "Get regions available", content = @Content(mediaType =
+               MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = String.class))),
+        @ApiResponse(responseCode = "500", ref  = "INTERNAL_ERROR"),
+         @ApiResponse(responseCode = "503", ref  = "UNAUTHORIZED"),
+         @ApiResponse(responseCode = "504", ref = "GATEWAY_TIMEOUT"),
+         @ApiResponse(responseCode = "DEFAULT", description = "Default error.", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+               schema = @Schema(implementation = String.class))) })
+   public ResponseEntity<GenericDto[]> getRegions() {
+      GenericDto[] dto = accuWeatherService.getAllRegions();
+      return new ResponseEntity<>(dto, HttpStatus.OK);
+   }
+
+   @GetMapping(value = "/location/countries")
+   @ResponseBody
+   @Operation(summary = "Get", description = "Get countries by region", security = @SecurityRequirement(name = "Token"))
+   @ApiResponses(value = {
+         @ApiResponse(responseCode = "200", description = "Gives the countries list", content = @Content(mediaType =
+               MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = String.class))),
+         @ApiResponse(responseCode = "500", ref = "INTERNAL_ERROR"), //
+         @ApiResponse(responseCode = "504", ref = "GATEWAY_TIMEOUT"),
+         @ApiResponse(responseCode = "DEFAULT", description = "Default error.", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+               schema = @Schema(implementation = String.class))) })
+   public ResponseEntity<GenericDto[]> getCountries(@RequestParam("region") String region) {
+      GenericDto[] dto = accuWeatherService.getAllCountriesByRegion(region);
+      return new ResponseEntity<>(dto, HttpStatus.OK);
+   }
+
+   @GetMapping(value = "/location/cities")
+   @ResponseBody
+   @Operation(summary = "Get", description = "Get cities by country and text", security = @SecurityRequirement(name = "Token"))
+   @ApiResponses(value = {
+         @ApiResponse(responseCode = "200", description = "Gives cities that match with the city text search", content = @Content(mediaType =
+               MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = String.class))),
+         @ApiResponse(responseCode = "500", ref = "INTERNAL_ERROR"), //
+         @ApiResponse(responseCode = "504", ref = "GATEWAY_TIMEOUT"),
+         @ApiResponse(responseCode = "DEFAULT", description = "Default error.", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+               schema = @Schema(implementation = String.class))) })
+   public ResponseEntity<LocationDto[]> getCities(@RequestParam("country") String country, @RequestParam("city") String city) {
+      LocationDto[] dto = accuWeatherService.getCitiesByCountryAndTextCity(country, city);
+      return new ResponseEntity<>(dto, HttpStatus.OK);
+   }
+
+   @GetMapping(value = "/weather")
+   @ResponseBody
+   @Operation(summary = "Get", description = "Get weather by locationId (cityId)", security = @SecurityRequirement(name = "Token"))
+   @ApiResponses(value = {
+         @ApiResponse(responseCode = "200", description = "Gives weather for city", content = @Content(mediaType =
+               MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = String.class))),
+         @ApiResponse(responseCode = "500", ref = "INTERNAL_ERROR"), //
+         @ApiResponse(responseCode = "504", ref = "GATEWAY_TIMEOUT"),
+         @ApiResponse(responseCode = "DEFAULT", description = "Default error.", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+               schema = @Schema(implementation = String.class))) })
+   public ResponseEntity<WeatherForecastDto> getWeather(@RequestParam("cityId") String cityId) {
+      WeatherForecastDto dto = accuWeatherService.getCityWeather(cityId);
+      return new ResponseEntity<>(dto, HttpStatus.OK);
+   }
+
+
+}
