@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.marcelo.martinez.bp.challenge.api.ExceptionsCode;
-import com.marcelo.martinez.bp.challenge.busisness.exception.CustomException;
+import com.marcelo.martinez.bp.challenge.exception.ExceptionsCode;
+import com.marcelo.martinez.bp.challenge.exception.CustomException;
 import com.marcelo.martinez.bp.challenge.dto.authentication.AuthenticationRequestDto;
 import com.marcelo.martinez.bp.challenge.dto.authentication.AuthenticationResponseDto;
 

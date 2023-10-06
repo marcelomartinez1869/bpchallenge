@@ -9,8 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import com.marcelo.martinez.bp.challenge.api.ExceptionsCode;
-import com.marcelo.martinez.bp.challenge.busisness.exception.CustomException;
+import com.marcelo.martinez.bp.challenge.exception.ExceptionsCode;
+import com.marcelo.martinez.bp.challenge.exception.CustomException;
 import com.marcelo.martinez.bp.challenge.dto.location.GenericDto;
 import com.marcelo.martinez.bp.challenge.dto.location.LocationDto;
 import com.marcelo.martinez.bp.challenge.dto.weather.WeatherForecastDto;

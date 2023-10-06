@@ -1,4 +1,4 @@
-package com.marcelo.martinez.bp.challenge.api;
+package com.marcelo.martinez.bp.challenge.exception;
 
 import org.springframework.http.HttpStatus;
 

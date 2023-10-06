@@ -22,7 +22,7 @@ import com.marcelo.martinez.bp.challenge.model.repository.WeatherRepository;
 import com.marcelo.martinez.bp.challenge.util.ContextFactory;
 
 @Service
-public class AccuWeatherService {
+public class WeatherService {
 
    @Autowired
    private AccuWeatherClient weatherClient;

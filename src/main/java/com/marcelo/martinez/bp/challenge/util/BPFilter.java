@@ -17,7 +17,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.JWTVerifier;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.marcelo.martinez.bp.challenge.api.ExceptionsCode;
+import com.marcelo.martinez.bp.challenge.exception.ExceptionsCode;
 
 @Component
 public class BPFilter extends OncePerRequestFilter {

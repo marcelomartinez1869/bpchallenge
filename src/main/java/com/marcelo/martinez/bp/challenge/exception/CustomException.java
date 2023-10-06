@@ -1,8 +1,4 @@
-package com.marcelo.martinez.bp.challenge.busisness.exception;
-
-import java.util.List;
-
-import com.marcelo.martinez.bp.challenge.api.ExceptionsCode;
+package com.marcelo.martinez.bp.challenge.exception;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -13,21 +9,9 @@ public class CustomException extends RuntimeException {
 
    private final ExceptionsCode exceptionsCode;
 
-   private List<String> fields;
-
-   public CustomException(ExceptionsCode exceptionCode) {
-      this.exceptionsCode = exceptionCode;
-   }
-
    public CustomException(String message, ExceptionsCode exceptionCode) {
       super(message);
       this.exceptionsCode = exceptionCode;
-   }
-
-   public CustomException(String message, ExceptionsCode exceptionCode, List<String> fields) {
-      super(message);
-      this.exceptionsCode = exceptionCode;
-      this.fields = fields;
    }
 
    public CustomException(String message, ExceptionsCode exceptionCode, Throwable cause) {

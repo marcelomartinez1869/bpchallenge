@@ -26,9 +26,9 @@ public class AuthenticationController {
 
    @PostMapping(value = "/login", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
    @ResponseBody
-   @Operation(summary = "Post", description = "Login")
+   @Operation(summary = "Post", description = "Endpoint for API authentcation")
    @ApiResponses(value = {
-         @ApiResponse(responseCode = "200", description = "Get the token", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)),
+         @ApiResponse(responseCode = "200", description = "Token created", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)),
          @ApiResponse(responseCode = "500", ref = "INTERNAL_ERROR"), //
          @ApiResponse(responseCode = "504", ref = "GATEWAY_TIMEOUT"),
          @ApiResponse(responseCode = "401", ref = "UNAUTHORIZED"), //
