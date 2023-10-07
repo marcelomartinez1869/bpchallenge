@@ -7,7 +7,7 @@ Se hizo un api desde cero la cual posee:
 
 -Generacion de token JWT a traves de un endpoint de login.
 En este punto queria aclarar que los datos de usuarios estan puestos en el aplication.properties.
-Lo ideal seria en un ambiente real ponerlos en un secret y tener un secret manajer para consumirlo directamente.
+Lo ideal seria en un ambiente real ponerlos en un secret y tener un secret manager para consumirlo directamente.
 
 
 -4 endpoints GET los cuales para obtener REGIONES, PAISES, CIUDAD, y CLIMA para una determinada ciudad.
