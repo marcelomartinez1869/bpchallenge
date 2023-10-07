@@ -1,18 +1,17 @@
 package com.marcelo.martinez.bp.challenge.busisness.service;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.marcelo.martinez.bp.challenge.exception.ExceptionsCode;
-import com.marcelo.martinez.bp.challenge.exception.CustomException;
 import com.marcelo.martinez.bp.challenge.dto.authentication.AuthenticationRequestDto;
 import com.marcelo.martinez.bp.challenge.dto.authentication.AuthenticationResponseDto;
+import com.marcelo.martinez.bp.challenge.exception.CustomException;
+import com.marcelo.martinez.bp.challenge.exception.ExceptionsCode;
 
 @Service
 public class AuthenticationService {
@@ -34,24 +33,21 @@ public class AuthenticationService {
       AuthenticationResponseDto tokenDto = new AuthenticationResponseDto();
 
       if (!user.equals(loginDto.getUser()) || !password.equals(loginDto.getPassword())) {
-         throw new CustomException("unauthorized", ExceptionsCode.UNAUTHORIZED);
+         throw new CustomException(ExceptionsCode.UNAUTHORIZED.getError(), ExceptionsCode.UNAUTHORIZED);
       }
-
-      Map<String, String> payLoad = new HashMap<>();
-      payLoad.put("user", user);
-      payLoad.put("pass", password);
 
       Algorithm algorithm = Algorithm.HMAC256(secretKey);
 
       Date expirationTime = new Date(System.currentTimeMillis() + EXPIRATION);
 
-      String token = JWT
-            .create()
-            .withIssuer("auth0")
-            .withPayload(payLoad)
-            .withClaim(user, password)
-            .withExpiresAt(expirationTime)
-            .sign(algorithm);
+      String token = JWT.create()
+                           .withIssuer("auth0")
+                           .withSubject("CHALLENGE SUBJECT")
+                           .withClaim(user, password)
+                           .withIssuedAt(new Date())
+                           .withExpiresAt(expirationTime)
+                           .withJWTId(UUID.randomUUID().toString())
+                           .sign(algorithm);
 
       tokenDto.setExpiration(EXPIRATION);
       tokenDto.setToken(token);

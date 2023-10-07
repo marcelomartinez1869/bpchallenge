@@ -20,7 +20,7 @@ import reactor.core.publisher.Mono;
 
 @Slf4j
 @Component
-public class AccuWeatherClient {
+public class   AccuWeatherClient {
 
    public static final String PROVIDER_KEY_PARAM = "apikey";
 
@@ -34,7 +34,7 @@ public class AccuWeatherClient {
 
    private static final String GET_WEATHER_PATH = "/forecasts/v1/daily/1day/{0}";
 
-   private static final int TIMEOUT = 30;
+   private static final int TIMEOUT = 10;
 
    @Value("${secrets.accuweather.apiurl}")
    private String apiUrl;
@@ -66,6 +66,9 @@ public class AccuWeatherClient {
                   log.error("TimeOut {}", error.getMessage());
                   throw new CustomException("Timeout", ExceptionsCode.GATEWAY_TIMEOUT);
                } else {
+                  if (error instanceof CustomException) {
+                     throw (CustomException) error;
+                  }
                   log.error("Error getting Regions {}", error.getMessage());
                   throw new CustomException(error.getMessage(), ExceptionsCode.INTERNAL_ERROR, error);
                }
@@ -98,6 +101,9 @@ public class AccuWeatherClient {
                   log.error("TimeOut {}", error.getMessage());
                   throw new CustomException("Timeout", ExceptionsCode.GATEWAY_TIMEOUT);
                } else {
+                  if (error instanceof CustomException) {
+                     throw (CustomException) error;
+                  }
                   log.error("Error getting Countries {}", error.getMessage());
                   throw new CustomException(error.getMessage(), ExceptionsCode.INTERNAL_ERROR, error);
                }
@@ -131,6 +137,9 @@ public class AccuWeatherClient {
                   log.error("TimeOut {}", error.getMessage());
                   throw new CustomException("Timeout", ExceptionsCode.GATEWAY_TIMEOUT);
                } else {
+                  if (error instanceof CustomException) {
+                     throw (CustomException) error;
+                  }
                   log.error("Error getting City by text {}", error.getMessage());
                   throw new CustomException(error.getMessage(), ExceptionsCode.INTERNAL_ERROR, error);
                }
@@ -162,6 +171,9 @@ public class AccuWeatherClient {
                   log.error("TimeOut {}", error.getMessage());
                   throw new CustomException("Timeout", ExceptionsCode.GATEWAY_TIMEOUT);
                } else {
+                  if (error instanceof CustomException) {
+                     throw (CustomException) error;
+                  }
                   log.error("Error getting weather{}", error.getMessage());
                   throw new CustomException(error.getMessage(), ExceptionsCode.INTERNAL_ERROR, error);
                }

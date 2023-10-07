@@ -1,4 +1,4 @@
-package com.marcelo.martinez.bp.challenge.util;
+package com.marcelo.martinez.bp.challenge.config;
 
 import java.io.IOException;
 

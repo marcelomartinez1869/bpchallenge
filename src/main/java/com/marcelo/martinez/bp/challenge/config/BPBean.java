@@ -1,14 +1,15 @@
-package com.marcelo.martinez.bp.challenge.util;
+package com.marcelo.martinez.bp.challenge.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import lombok.AllArgsConstructor;
+
 @Configuration
+@AllArgsConstructor
 public class BPBean {
 
-   @Autowired
    private BPFilter customURLFilter;
 
    @Bean
